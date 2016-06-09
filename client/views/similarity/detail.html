@@ -1,0 +1,117 @@
+<style type="text/css">
+  .line-error {
+    background: #ffffe0;
+    border: solid 1px #F7F7B5;
+  }
+  .line-error + div > .CodeMirror-linenumber {
+    background: #DD7700;
+    color: white;
+  }
+  .error-number {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .ace_editor { height: 350px; }
+  .errorHighlightxdd {
+    position:absolute;
+    z-index:20;
+    background: #F4B9B7;
+    border: solid 1px #F7F7B5;
+  }
+</style>
+
+<div class="content-wrapper">
+    <section class="content">
+          <!-- Small boxes (Stat box) -->
+          <!-- Formulario Units -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detalle</h3>
+                </div><!-- /.box-header -->
+                  <div class="box-body">
+                      
+
+                    <div class="container-fluid p-20">    
+                      <div class="">
+                        <h1>Página: </h1>
+                        <div style="">
+                          <div ng-repeat="sim in similarities">
+                            <h3>{{sim.name}} {{sim.lastname1}} {{sim.lastname2}}</h3>
+                            <table class="table table-striped table-hover table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Cod. Alumno</th>
+                                  <th>Cod. Profesor</th>
+                                  <th>Errors</th>
+                                  <th>Recomendaciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              
+                                  <tr>
+                                    <td>{{$index + 1}}</td>
+                                    <td style="width:45%">
+                                      <!--textarea id="code_{{sim.answer_id}}" name="code">{{sim.result}}</textarea-->
+                                      <div id="code_{{sim.answer_id}}" ui-ace="{
+                                        useWrapMode : true,
+                                        showGutter: true,
+                                        mode: 'html',
+                                        firstLineNumber: 1,
+                                        onLoad: aceLoaded,
+                                        onChange: aceChanged
+                                      }" ng-model="sim.result" ng-readonly="true"></div>
+                                    </td>
+                                    <!--td style="width:45%">
+                                      <iframe id="answer-<%= sim[3] %>" class="preview"></iframe>
+                                      <script type="text/javascript">
+                                        updatePreview("answer-<%= sim[3] %>","code_<%= sim[3] %>");
+                                      </script>
+                                    </td-->
+                                    <td style="width:45%">
+                                        <!--textarea id="code_{{sim.answer_id}}_r" name="code">{{sim.solution}}</textarea-->
+                                        <div id="code_{{sim.answer_id}}_r" ui-ace="{
+                                          useWrapMode : true,
+                                          showGutter: true,
+                                          mode: 'html',
+                                          firstLineNumber: 1,
+                                          onLoad: aceLoaded,
+                                          onChange: aceChanged
+                                        }" ng-model="sim.solution" ng-readonly="true"></div>
+                                    </td>
+                                      <td>
+                                            <ol style="padding-left: 20px;">
+                                              <li ng-repeat="error in sim.errors" class="error-number" ng-click="setError(sim.answer_id, error.line_number)">
+                                                {{error.description}}
+                                              </li>
+                                            </ol>
+                                      </td>
+                                      <td>
+                                            <ol style="padding-left: 20px;">
+                                            
+                                            <li ng-repeat="rec in sim.recommendations">
+                                              {{rec.unit}}
+                                            </li>
+                                            
+                                            </ol>
+                                      </td>
+                                  </tr>
+                              
+                              </tbody>
+                              </table>
+                            </div>
+                      </div>
+                      </div>
+                      
+                  </div>
+
+
+                  </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div>
+          </div>
+
+</section>
+</div>

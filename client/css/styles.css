@@ -1,0 +1,37 @@
+.glyphicon-remove:hover {
+  cursor:pointer
+}
+.buttons-add-slides>a>img {
+	width: 50px;
+	cursor: pointer;
+}
+.img-preview {
+	width: 250px;
+    border-radius: 5px;
+    padding: 5px;
+    border: #A0A0A0 2px solid;
+}
+#loading-container {
+	display: none;
+	background-color: #555555 !important;
+	border-color: #555555;
+	opacity: 0.7;
+	color: white !important;
+	position: fixed;
+	right: 0px;
+	top: 59px;
+	font-size: 30px;
+	background-color: #f5f5f5;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: -9px;
+	z-index: 99999;
+}
+input.ng-invalid, select.ng-invalid {
+	border-color: #f39c12;
+    box-shadow: none;
+}
+input.ng-valid, select.ng-valid {
+    border-color: #00a65a;
+    box-shadow: none;
+}

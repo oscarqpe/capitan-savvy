@@ -1,0 +1,34 @@
+<div class="ml-section well">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group">
+                <input ng-model="slide.lotitle" class="form-control" type="text" placeholder="T&iacute;tulo (Opcional)" >
+            </div>
+            <div class="form-group">
+                <input ng-model="slide.lovideo" class="form-control" type="text" placeholder="Enlace de video (Youtube o vimeo)">
+            </div>
+            <div class="form-group">
+                <textarea id="septimo_tex{{$index}}" data-index="{{$index}}" class="editable form-control"
+                          ng-model="slide.loparagraph" type="text"
+                          placeholder="Texto" rows="4" required="required"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="box-image">
+                <div class="cubierta-video">
+                    <input src="/images/icon_video.png" type="image" ng-model="slide.loimage" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-1">
+            <a href="" ng-click="loslide.splice($index,1); ">
+                <span class="glyphicon  glyphicon-remove" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+

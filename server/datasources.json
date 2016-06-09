@@ -1,0 +1,21 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "dbMysql": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "capitan",
+    "password": "sistemas",
+    "name": "dbMysql",
+    "user": "root",
+    "connector": "mysql"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage"
+  }
+}

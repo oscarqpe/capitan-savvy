@@ -1,0 +1,27 @@
+
+  <form name="todoForm" novalidate ng-submit="addTodo()">
+    <div class="form-group" ng-class="{'has-error': todoForm.content.$invalid && todoForm.content.$dirty}">  
+      <input type="text" class="form-control focus" name="content" placeholder="Content" autocomplete="off" required ng-model="newTodo.content">
+      <span class="has-error control-label" ng-show="todoForm.content.$invalid && todoForm.content.$dirty">
+        Content is required.
+      </span>
+    </div>
+    <button class="btn btn-default" ng-disabled="todoForm.$invalid">Add</button>
+  </form>
+
+  <table class="table table-hover">
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Reason</th>
+    </tr>
+    <tr ng-repeat="todo in todos">
+      <td>183</td>
+      <td>{{todo.content}}</td>
+      <td>11-7-2014</td>
+      <td><span class="label label-success">Approved</span></td>
+      <td><i class="glyphicon glyphicon-remove pull-right" ng-click="removeTodo(todo)"></i></td>
+    </tr>
+  </table>

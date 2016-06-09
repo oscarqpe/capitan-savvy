@@ -1,0 +1,82 @@
+<div ng-form class="ml-section well" onload="finishLoading()">
+    <div class="row">
+        <div class=" col-md-7">
+
+            <div class="form-group">
+                <label for="nombre"> *Título de la página rcorp</label>
+                <input ng-model="slide.lotitle" class="form-control" type="text" placeholder="Título de la página" required="required">
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion"> *Descripción</label>
+                <textarea id="cero_tex{{$index}}" data-index="{{$index}}" class="editable form-control"
+                          ng-model="slide.loparagraph" type="text"
+                          placeholder="Descripción" rows="4" required></textarea>
+            </div>
+
+            <!-- <input type='file' id="imgInp" ng-model = 'rutaImage' />
+            <img class="tamIconTabla img-responsive" src="images/{{rutaImage}}" >
+            -->
+            <!--select kendo-combo-box
+                    k-placeholder="'Tag...'"
+                    k-data-text-field="'name'"
+                    k-data-value-field="'id'"
+                    k-filter="'contains'"
+                    k-auto-bind="false"
+                    k-min-length="3"
+                    k-data-source="{ transport: {read: { url:'/Resources/Read_tags', type:'post', datatype: 'json'} } }"
+                    k-ng-model="slide.pagetag"
+                    required="required"
+                    k-required="required"
+                    name="tag"
+                    k-data-required="required"
+                    >
+
+            </select-->
+        </div>
+
+        <div class="col-md-5">
+            <div class="box-image">
+                <div class="cubierta">
+                    <small>Imagen obligatoria</small>
+                    <input 
+                        ng-model="slide.loimage" 
+                        type="text" 
+                        id="cover{{$index}}_url_text" 
+                        class="form-control" 
+                        placeholder="Cover" 
+                        style="display: none;">
+                    <input 
+                        type="file" 
+                        class="upload" 
+                        id="cover{{$index}}_url" 
+                        ng-model-instant
+                        data-ref="cover{{$index}}_url"
+                        onchange="angular.element(this).scope().imageUpload(this)">
+                    <img 
+                        id="cover{{$index}}_url_preview" 
+                        class="img-preview" 
+                        src="/images/029_icon_imagen.png" 
+                        ng-src="{{slide.loimage}}">
+
+                </div>
+            </div>
+        </div>
+
+      </div>
+   </div>
+
+<div class="row">
+    <!-- <input type="file" accept="images/*" image="image"/>
+    <img ng-show="image" ng-src="images/{{image.url}}" type="{{image.file.type}}" />-->
+</div>
+
+<script>
+    // $(document).ready(function(){
+    //     console.log('ocsar');
+    //     var editor = new MediumEditor('.editable', {
+    //         buttonLabels: 'fontawesome'
+    //     });
+    // });
+</script>
+

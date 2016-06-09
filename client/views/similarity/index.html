@@ -1,0 +1,100 @@
+<style>
+  ol {
+    margin-left: 20px;
+  }
+  table td,th{
+    padding: 1px;
+    padding-left: 5px;
+  }
+</style>
+<div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Códigos Similares </h3>                  
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <!-- body -->
+
+                  <div class="container-fluid p-20">
+
+                      <div class="">
+                          <label for="datos_val">Datos:
+                            <select class="form-control" ng-model="datos_val" id="datos_val" name="datos_val" ng-change="loadFilters()">
+                              <option ng-repeat="dato in datos" value="{{dato.id}}"
+                                ng-selected="datos_val == dato.id">{{dato.name}}</option>
+                            </select>
+                          </label>
+                          <label for="branches">
+                      Sedes:
+                          <select class="form-control" ng-model="branch_id" id="branch_id" name="branch_id" ng-change="loadFilters()">
+                              <option ng-repeat="branch in branches" ng-selected="branch_id == branch.id" value="{{branch.id}}">{{branch.name}}</option>
+                            </select>
+                      </label>
+                      <label for="courses">
+                      Cursos:
+                          <select class="form-control" ng-model="course_id" id="course_id" name="course_id" ng-change="loadFilters()">
+                          <option ng-repeat="course in courses" ng-selected="course_id == course.id" value="{{course.id}}">{{course.name}}</option>
+                            </select>
+                      </label>
+                      <label for="units">
+                      Unidades:
+                      <select class="form-control" name="units" ng-model="unit_id" id="unit_id" ng-change="loadFilters()">
+                          <option value="0">-- Todos --</option>
+                          <option ng-repeat="unit in units" ng-selected="unit_id == unit.id" value="{{unit.id}}">{{unit.title}}</option>
+                            </select>
+                      </label>
+                      <label for="similarities">
+                      Similaridad:
+                        <select class="form-control" name="similarities" ng-model="similarity" id="similarity" ng-change="loadFilters()">
+                              <option ng-repeat="sim in similarities" ng-selected="similarity == sim.id" value="{{sim.id}}">{{sim.name}}</option>
+                            </select>
+                      </label>
+                      </form>
+                        <div ng-repeat="page in pages">
+                        <!--Div that will hold the pie chart-->
+                            <div style="float: left;">
+                              <div id="chart_div{{$index}}">
+                                
+                                <div google-chart chart="page.chart" style="width:100%;"></div>
+
+                              </div>
+                            </div>
+                            <div style="">
+                              <h3>{{page.title}}</h3>
+                              <table class="table-striped table-hover table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Total de Usuarios</th>
+                                    <th ng-show="similarity==1">Similaridad Levenshtein</th>
+                                    <th ng-show="similarity==2">Similaridad AST</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="clus in cluster[$index]">
+                                        <td>{{$index + 1}}</td>
+                                        <!--td><a href="/admin/grades/similarities/branch/{{branch_id}}/course/{{course_id}}/unit/{{unit_id}}/similarity/{{similarity}}/datos/{{datos_val}}/page/{{clus.page_id}}/distance/{{clus.similitud_levenshtein}}">{{clus.total}}</a></td-->
+                                        <td><a ng-click="loadDetails(clus.page_id, (similarity == 1)? clus.similitud_levenshtein : clus.similitud_ast)">{{clus.total}}</a></td>
+                                        <td ng-show="similarity==1">{{clus.similitud_levenshtein}}</td>
+                                        <td ng-show="similarity==2">{{clus.similitud_ast}}</td>
+                                      </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                          <div style="clear: both"></div>
+                          <br>
+                        </div>
+                      </div>
+                      
+                  </div>
+
+                    <!-- boby -->
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div>
+      </div>
+</section>
+</div>

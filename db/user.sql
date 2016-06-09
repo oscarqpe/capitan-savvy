@@ -1,0 +1,58 @@
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_rol_id` int(11) NOT NULL,
+  `fk_id_institution` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `email` varchar(45) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `is_online` bit(1) DEFAULT NULL,
+  `social_id` varchar(255) DEFAULT NULL,
+  `deleted` bit(1) DEFAULT b'0',
+  `credentials` text,
+  `challenges` text,
+  `email_verified` tinyint(1) DEFAULT '0',
+  `verification_token` varchar(512) DEFAULT NULL,
+  `status` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `fk_user_rol` (`fk_rol_id`),
+  KEY `fk_user_institution1` (`fk_id_institution`),
+  CONSTRAINT `fk_user_institution1` FOREIGN KEY (`fk_id_institution`) REFERENCES `institution` (`id_institution`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_rol` FOREIGN KEY (`fk_rol_id`) REFERENCES `rol` (`id_rol`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- CREATE TABLE `user` (
+-- 	`id` INT(11) NOT NULL AUTO_INCREMENT,
+-- 	`fk_rol_id` INT(11) NOT NULL,
+-- 	`fk_id_institution` INT(11) NOT NULL,
+-- 	`name` VARCHAR(45) NOT NULL,
+-- 	`last_name` VARCHAR(45) NOT NULL,
+-- 	`username` VARCHAR(45) NOT NULL,
+-- 	`password` VARCHAR(255) NULL DEFAULT NULL,
+-- 	`email` VARCHAR(45) NOT NULL,
+-- 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- 	`updated_at` DATETIME NULL DEFAULT NULL,
+-- 	`image_url` VARCHAR(255) NULL DEFAULT NULL,
+-- 	`is_online` BIT(1) NULL DEFAULT NULL,
+-- 	`social_id` VARCHAR(255) NULL DEFAULT NULL,
+-- 	`deleted` BIT(1) NULL DEFAULT b'0',
+-- 	`credentials` TEXT NULL,
+-- 	`challenges` TEXT NULL,
+-- 	`email_verified` TINYINT(1) NULL DEFAULT '0',
+-- 	`verification_token` VARCHAR(512) NULL DEFAULT NULL,
+-- 	`status` VARCHAR(512) NULL DEFAULT NULL,
+-- 	PRIMARY KEY (`id`),
+-- 	UNIQUE INDEX `username_UNIQUE` (`username`),
+-- 	UNIQUE INDEX `email_UNIQUE` (`email`),
+-- 	CONSTRAINT `fk_user_institution1` FOREIGN KEY (`fk_id_institution`) REFERENCES `institution` (`id_institution`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+-- 	CONSTRAINT `fk_user_rol` FOREIGN KEY (`fk_rol_id`) REFERENCES `rol` (`id_rol`) ON UPDATE NO ACTION ON DELETE NO ACTION
+-- )
+-- COLLATE='latin1_swedish_ci'
+-- ENGINE=InnoDB
+-- ;
