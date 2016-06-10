@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Capitan</title>
+    <title>Capitan SAVVY</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="vendor/ngToast/dist/ngToast.min.css">
     <link rel="stylesheet" href="vendor/CodeMirror/lib/codemirror.css">
 
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,7 +36,7 @@
     <![endif]-->
   </head>
 
-  <body class="{{class_body}}" ng-controller="appController">
+  <body class="{{class_body}} sidebar-collapse" ng-controller="appController">
     <div class="{{class_wrapper}}">
         <div id="loading-container">
             <i class="fa fa-spinner fa-spin"></i>
@@ -91,6 +90,8 @@
 
     <script src="js/controllers/similarity/similarityController.js"></script>
     <script src="js/controllers/similarity/detailController.js"></script>
+
+    <script src="js/my-scripts/go.js"></script>
 
     <!-- plugins -->
     <script src="vendor/icheck/icheck.min.js"></script>

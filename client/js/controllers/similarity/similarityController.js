@@ -73,6 +73,7 @@ angular
 	      		for (var i = 0; i < $scope.pages.length; i++) {
 	      			$scope.pages[i].chart = {};
 	      			$scope.pages[i].chart.type = "PieChart";
+	      			//$scope.pages[i].chart.type = "PieChart";
 	      			var rows = [];
 	      			for (var j = 0; j < $scope.cluster[i].length; j++) {
 	      				console.log("Datos VAl: " + $scope.$parent.similarity);

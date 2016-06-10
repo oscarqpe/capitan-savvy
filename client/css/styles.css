@@ -35,3 +35,14 @@ input.ng-valid, select.ng-valid {
     border-color: #00a65a;
     box-shadow: none;
 }
+.row {
+	margin-top: 50px;
+}
+.main-sidebar {
+    height: 100% !important;
+    position: fixed !important;
+}
+.main-header {
+    position: fixed !important;
+    width: 100% !important;
+}

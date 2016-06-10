@@ -42,9 +42,17 @@ angular
       				if (data.data != undefined)
       				 	$scope.similarities[data.data.index].recommendations = data.data.data;
       			});
+            
       		};
+          var html = toNode($scope.similarities[0].solution);
+          console.log("HTML xd");
+          console.log(html.tagName);
+          for (i = 0; i < html.childNodes.length; i++) {
+            console.log(html.childNodes[i].tagName);
+          }
       	})
         .finally(function(data) {
+          loadTrees();
           console.log($scope.similarities.length);
           for (var i = 0; i < $scope.similarities.length; i++) {
             console.log("code_" + $scope.similarities[i].answer_id);
@@ -52,6 +60,16 @@ angular
             //editor("code_" + $scope.similarities[i].answer_id + "_r");
           }
         });
+
+        setTimeout(function() {
+          //console.log("Lenght: " + $scope.similarities.length);
+          for (i = 0; i < $scope.similarities.length; i++) {
+            //console.log("viz_" + $scope.similarities[i].id);
+            var id_sim = $scope.similarities[i].id;
+            init("viz_" + id_sim + "_res", $scope.similarities[i].result);
+            init("viz_" + id_sim + "_sol", $scope.similarities[i].solution);
+          }
+        }, 3000);
 
       	$scope.getErrors = function (idSolution) {
       		return AppServices.getErrors(idSolution, $scope.$parent.datos_val)
@@ -87,5 +105,110 @@ angular
           var editor_r = ace.edit("code_" + id + "_r");
           editor.getSession().addMarker(new Range(line - 1, 1, line - 1, 144), "errorHighlightxdd", "fullLine");
           editor_r.getSession().addMarker(new Range(line - 1, 1, line - 1, 144), "errorHighlightxdd", "fullLine");
+        }
+
+        function toNode(html) {
+          var doc = document.documentElement.cloneNode(false);
+          doc.innerHTML = html;
+          return doc;
+        }
+        var names = {}; // hash to keep track of what names have been used
+        function init(div, content) {
+        //  if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+          var $ = go.GraphObject.make;  // for conciseness in defining templates
+
+          myDiagram =
+            $(go.Diagram, div,
+              {
+                initialAutoScale: go.Diagram.UniformToFill,
+                // define the layout for the diagram
+                layout: $(go.TreeLayout, { nodeSpacing: 5, layerSpacing: 30 })
+              });
+
+          // Define a simple node template consisting of text followed by an expand/collapse button
+          myDiagram.nodeTemplate =
+            $(go.Node, "Horizontal",
+              { selectionChanged: nodeSelectionChanged },  // this event handler is defined below
+              $(go.Panel, "Auto",
+                $(go.Shape, { fill: "#1F4963", stroke: null }),
+                $(go.TextBlock,
+                  { font: "bold 13px Helvetica, bold Arial, sans-serif",
+                    stroke: "white", margin: 3 },
+                  new go.Binding("text", "key"))
+              ),
+              $("TreeExpanderButton")
+            );
+
+          // Define a trivial link template with no arrowhead.
+          myDiagram.linkTemplate =
+            $(go.Link,
+              { selectable: false },
+              $(go.Shape));  // the link shape
+
+
+          var nodeDataArray = [];
+
+          // Walk the DOM, starting at document
+          function traverseDom(node, parentName) {
+            // skip everything but HTML Elements
+            //if (!(node instanceof Element)) return;
+            // Ignore the menu on the left of the page
+            if (node.id === "menu") return;
+            // add this node to the nodeDataArray
+            var name = getName(node);
+            var data = { key: name, name: name };
+            nodeDataArray.push(data);
+            // add a link to its parent
+            if (parentName !== null) {
+              data.parent = parentName;
+            }
+            // find all children
+            var l = node.childNodes.length;
+            for (var i = 0; i < l; i++) {
+              traverseDom(node.childNodes[i], name);
+            }
+          }
+
+          // Give every node a unique name
+          function getName(node) {
+            var n = node.nodeName;
+            if (node.id) n = n + " (" + node.id + ")";
+            var namenum = n;
+            var i = 1;
+            while (names[namenum] !== undefined) {
+              namenum = n + i;
+              i++;
+            }
+            names[namenum] = node;
+            return namenum;
+          }
+
+          // build up the tree
+
+          //console.log(document.activeElement);
+        
+          //ACA SE DEBE CONVERTIR A PARTIR DE UN STRING A TIPO DOCUMENT Y PASARLO AL TRAVERSEDOM
+          //var str = document.getElementById("solution").value;
+          /*console.log(jQuery.parseHTML(str));
+          var html = jQuery.parseHTML(str);
+          var d = document.createElement('div');
+          d.innerHTML = jQuery.parseHTML(str);
+          console.log(d.firstChild);*/
+          var node = toNode(content);
+          console.log(node);
+
+          traverseDom(node, null);
+
+          console.log(nodeDataArray);
+          // create the model for the DOM tree
+          myDiagram.model = new go.TreeModel(nodeDataArray);
+        }
+        // When a Node is selected, highlight the corresponding HTML element.
+        function nodeSelectionChanged(node) {
+          if (node.isSelected) {
+            names[node.data.name].style.backgroundColor = "lightblue";
+          } else {
+            names[node.data.name].style.backgroundColor = "";
+          }
         }
   }]);
