@@ -61,7 +61,7 @@ module.exports = function(Solutions) {
 	    }
   		return query;
   	}
-  	function get_similarity_solutions_details(branch_id, course_id, unit_id, page_id, similitud, datos, similarity) {
+  	function get_similarity_solutions_details(branch_id, course_id, unit_id, page_id, similitud, datos, similarity, limit, offset) {
 	    
 	    where_concat = "";
 	    if (branch_id != 0 && branch_id != null && !(datos != 1))
@@ -111,7 +111,7 @@ module.exports = function(Solutions) {
 	        " left join users us on us.id = s.user_id " + 
 	        " where s.page_id = " + page_id + " " + where_concat + 
 	        " and s." + simil + " = " + similitud + 
-	        " order by s." + simil + "";
+	        " order by s." + simil + " limit " + limit + " offset " + offset;
 	    } else {
 	      query = "select " +
 	        "   s.id,  " + 
@@ -131,7 +131,7 @@ module.exports = function(Solutions) {
 	        " inner join courses c on c.id = u.course_id " + 
 	        " where s.page_id = " + page_id + " " + where_concat +
 	        " and s." + simil + " = " + similitud +  
-	        " order by s." + simil + "";
+	        " order by s." + simil + " limit " + limit + " offset " + offset;
 	    }
 	    console.log(query);
 	    return query;
@@ -194,7 +194,7 @@ module.exports = function(Solutions) {
             }
         });
 	};
-	Solutions.getDetails = function (idBranch, idCourse, idUnit, idPage, similarity, distance, datos, cb) {
+	Solutions.getDetails = function (idBranch, idCourse, idUnit, idPage, similarity, distance, datos, limit, offset, cb) {
 		
 		var ds = Solutions.dataSource;
 
@@ -215,7 +215,7 @@ module.exports = function(Solutions) {
 	    if (idUnit == null)
 	      	idUnit = 0;
 
-	    var sqlSim = get_similarity_solutions_details(idBranch, idCourse, idUnit, idPage, distance, datos, similarity);
+	    var sqlSim = get_similarity_solutions_details(idBranch, idCourse, idUnit, idPage, distance, datos, similarity, limit, offset);
 
 	    ds.connector.query(sqlSim, null, function (err, pages) {
 
@@ -328,7 +328,9 @@ module.exports = function(Solutions) {
 				{ arg: 'idPage', type: 'number', required: true, description: 'Page id'},
 				{ arg: 'similarity', type: 'number', required: true, description: 'Similarity'},
 				{ arg: 'distance', type: 'number', required: true, description: 'Distance'},
-				{ arg: 'datos', type: 'number', required: true, description: 'Data Type'}
+				{ arg: 'datos', type: 'number', required: true, description: 'Data Type'},
+				{ arg: 'limit', type: 'number', required: true, description: 'Limit'},
+				{ arg: 'offset', type: 'number', required: true, description: 'Offset'}
 			],
 			http: { verb: 'post', path: '/getDetails'},
 			isStatic: true,

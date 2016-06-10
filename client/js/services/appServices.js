@@ -88,7 +88,7 @@ appServices
 					}
 				});
 			},
-			getDetails: function (idBranch, idCourse, idUnit, idPage, similarity, distance, datos) {
+			getDetails: function (idBranch, idCourse, idUnit, idPage, similarity, distance, datos, limit, offset) {
 				return $http({
 					url: "/api/Solutions/getDetails",
 					method: "POST",
@@ -99,7 +99,9 @@ appServices
 						idPage: idPage ,
 						similarity: similarity ,
 						distance: distance ,
-						datos: datos
+						datos: datos,
+						limit: limit,
+						offset: offset
 					}
 				});
 			},

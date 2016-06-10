@@ -13,19 +13,37 @@ angular
     $scope.$parent.similarity = $routeParams.similarity;
     $scope.$parent.datos_val = $routeParams.datos;
 
+    $scope.limit = 5;
+    $scope.offset = 0;
+    $scope.istheremore = true;
+
 		$scope.similarities = {};
 
-		AppServices.getDetails(
+    $scope.loadData = function () {
+		    AppServices.getDetails(
       		$scope.$parent.branch_id, 
       		$scope.$parent.course_id, 
       		$scope.$parent.unit_id, 
       		$scope.idPage, 
       		$scope.$parent.similarity, 
       		$scope.distance, 
-      		$scope.$parent.datos_val)
+      		$scope.$parent.datos_val,
+          $scope.limit,
+          $scope.offset)
       	.success(function (data) {
-      		$scope.similarities = data.data;
-      		for (var i = 0; i < $scope.similarities.length; i++) {
+          if ($scope.offset == 0)
+      		  $scope.similarities = data.data;
+          else {
+            for (i = 0; i < data.data.length; i++)
+              $scope.similarities.push(data.data[i]);
+          }
+          console.log($scope.similarities);
+          console.log($scope.similarities.length);
+          if (data.data.length < 5 || data.data.length == 0) {
+            console.log("no more data");
+            $scope.istheremore = false;
+          }
+      		for (var i = $scope.offset; i < $scope.similarities.length; i++) {
       			//console.log($scope.similarities[i]);
       			$scope.similarities[i].errors = {};
       			$scope.similarities[i].recommendations = {};
@@ -44,17 +62,11 @@ angular
       			});
             
       		};
-          var html = toNode($scope.similarities[0].solution);
-          console.log("HTML xd");
-          console.log(html.tagName);
-          for (i = 0; i < html.childNodes.length; i++) {
-            console.log(html.childNodes[i].tagName);
-          }
       	})
         .finally(function(data) {
           loadTrees();
           console.log($scope.similarities.length);
-          for (var i = 0; i < $scope.similarities.length; i++) {
+          for (var i = $scope.offset; i < $scope.similarities.length; i++) {
             console.log("code_" + $scope.similarities[i].answer_id);
             editor("code_" + $scope.similarities[i].answer_id);
             //editor("code_" + $scope.similarities[i].answer_id + "_r");
@@ -63,13 +75,22 @@ angular
 
         setTimeout(function() {
           //console.log("Lenght: " + $scope.similarities.length);
-          for (i = 0; i < $scope.similarities.length; i++) {
+          for (i = $scope.offset; i < $scope.similarities.length; i++) {
             //console.log("viz_" + $scope.similarities[i].id);
             var id_sim = $scope.similarities[i].id;
             init("viz_" + id_sim + "_res", $scope.similarities[i].result);
             init("viz_" + id_sim + "_sol", $scope.similarities[i].solution);
           }
         }, 3000);
+      }
+      $scope.loadData();
+
+      $scope.pagination = function () {
+        if ($scope.istheremore) {
+          $scope.offset += $scope.limit;
+          $scope.loadData();
+        }
+      }
 
       	$scope.getErrors = function (idSolution) {
       		return AppServices.getErrors(idSolution, $scope.$parent.datos_val)
@@ -195,11 +216,11 @@ angular
           d.innerHTML = jQuery.parseHTML(str);
           console.log(d.firstChild);*/
           var node = toNode(content);
-          console.log(node);
+          //console.log(node);
 
           traverseDom(node, null);
 
-          console.log(nodeDataArray);
+          //console.log(nodeDataArray);
           // create the model for the DOM tree
           myDiagram.model = new go.TreeModel(nodeDataArray);
         }

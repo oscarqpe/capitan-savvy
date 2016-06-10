@@ -17,6 +17,10 @@
     z-index:20;
     background: #F4B9B7;
   }
+  .btn-more {
+    float: right;
+    font-size: 50px;
+  }
 </style>
 <div class="content-wrapper">
     <section class="content">
@@ -112,6 +116,11 @@
                                   </tr>
                               </tbody>
                               </table>
+                            </div>
+                            <div class="btn-more">
+                              <button type="button" class="btn btn-success" ng-click="pagination()" ng-show="istheremore">
+                                <i class="fa fa-plus-circle"></i> <span>mas ...</span>
+                              </button>
                             </div>
                       </div>
                       </div>
